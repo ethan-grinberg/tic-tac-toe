@@ -22,21 +22,14 @@ public class TicTacToeBoard {
       board = board.toLowerCase();
     }
   }
-  //sums the total score
-  private int sumScore(int[] rows, int[] columns, int[] diagonals) {
-    int rSum = Arrays.stream(rows).sum();
-    int cSum = Arrays.stream(columns).sum();
-    int dSum = Arrays.stream(diagonals).sum();
-    return rSum + cSum + dSum;
-  }
-  //checks if board isn't reachable
-  /*
   private boolean checkUnreachableState(boolean xWin, boolean oWin, int xCount, int oCount) {
     if (xWin && oWin) {
       return true;
+    } else if (!(xCount == oCount || (oCount + 1 == xCount))) {
+      return true;
     }
+    return false;
   }
-   */
 
   /**
    * Checks the state of the board (unreachable, no winner, X wins, or O wins)
@@ -48,10 +41,8 @@ public class TicTacToeBoard {
     Evaluation boardState = null;
     int rowLength = (int) Math.sqrt(board.length());
 
-
-    int[] rows = new int[rowLength];
-    int[] columns = new int[rowLength];
-    int[] diagonals = new int[2];
+    //{row0, row1, row2, col1, col2, col3, Ldiag, Rdiag}
+    int[] rowsColumnsDiagonals = new int[2*rowLength + 2];
 
     int rowNum = 0;
     int xCount = 0;
@@ -64,6 +55,8 @@ public class TicTacToeBoard {
         rowNum++;
       }
       System.out.println(rowNum);
+      //the column number of the current character
+      int columnNum = (i % rowLength);
 
       int score = 0;
       if (player == 'x') {
@@ -73,44 +66,47 @@ public class TicTacToeBoard {
         score = -1;
         oCount++;
         //Added this condition for random characters
-      } else {
-        score = -1;
+        //I'm not sure this is correct because then an o win might be artificially counted
+        //maybe I can prevent this through the oCount and xCount
+
       }
       //set row score
-      rows[rowNum] += score;
+      rowsColumnsDiagonals[rowNum] += score;
 
       //set column score
-      columns[i % rowLength] += score;
+      rowsColumnsDiagonals[columnNum + rowLength] += score;
 
+      //TODO
+      //I think the diagonal is creating a bug
       //set diagonal score
-      //Make sure middle square doesn't get added twice
-      if (i == rowNum) {
+      //I need to count the middle for both diagonals
+      if (columnNum == rowNum) {
         //adds score to left diagonal
-        diagonals[0] += score;
-      } else {
-        //adds score to right diagonal
-        //this else statement might be incorrect logic
-        diagonals[1] += score;
+        rowsColumnsDiagonals[2 * rowLength] += score;
+      } else if (columnNum != 0 && (i % (rowLength - 1) == 0)) {
+        //checks if character is on right diagonal and adds score there
+        //I believe that the i != rowNum makes sure middle and 0,0 isn't counted
+        rowsColumnsDiagonals[2 * rowLength] += score;
+      }
+      System.out.println("R" + Arrays.toString(rowsColumnsDiagonals));
+    }
+
+    System.out.println("R" + Arrays.toString(rowsColumnsDiagonals));
+    for (int i = 0; i < rowsColumnsDiagonals.length; i++) {
+      if (rowsColumnsDiagonals[i] == 3) {
+        xWin = true;
+        boardState = Evaluation.Xwins;
+      } else if (rowsColumnsDiagonals[i] == -3) {
+        oWin = true;
+        boardState = Evaluation.Owins;
       }
     }
-    //sums all of the arrays
-    int totalScore = sumScore(rows, columns, diagonals);
-    if (totalScore == rowLength) {
-      xWin = true;
-      boardState = Evaluation.Xwins;
-    } else if (totalScore == -rowLength) {
-      oWin = true;
-      boardState = Evaluation.Owins;
-    }
 
-    //TODO
-    /*
     if(checkUnreachableState(xWin, oWin, xCount, oCount)) {
       boardState = Evaluation.UnreachableState;
-    } else {
+    } else if (!xWin && !oWin) {
+      boardState = Evaluation.NoWinner;
     }
-     */
-
 
     return boardState;
   }
