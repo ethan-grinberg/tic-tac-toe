@@ -7,22 +7,25 @@ import java.util.Arrays;
 public class TicTacToeBoard {
   //variable that stores the board string
   private String board;
+  private int rowLength;
+  private int numSquares;
   /**
    * This method should load a string into your TicTacToeBoard class.
    * @param setBoard The string representing the board
    */
   public TicTacToeBoard(String setBoard) {
-    int numSquares = setBoard.length();
+    int setNumSquares = setBoard.length();
     //cite source
-    int rowLength = (int) Math.sqrt(numSquares);
-    if (rowLength * rowLength != numSquares) {
+    int setRowLength = (int) Math.sqrt(setNumSquares);
+    if (setRowLength * setRowLength != setNumSquares) {
       throw new IllegalArgumentException();
     } else {
-      board = setBoard;
-      board = board.toLowerCase();
+      board = setBoard.toLowerCase();
+      rowLength = setRowLength;
+      numSquares = setNumSquares;
     }
   }
-  private boolean checkUnreachableState(boolean xWin, boolean oWin, int xCount, int oCount) {
+  private boolean isUnreachableState(boolean xWin, boolean oWin, int xCount, int oCount) {
     if (xWin && oWin) {
       return true;
     } else if (!(xCount == oCount || (oCount + 1 == xCount))) {
@@ -39,15 +42,14 @@ public class TicTacToeBoard {
     boolean xWin = false;
     boolean oWin = false;
     Evaluation boardState = null;
-    int rowLength = (int) Math.sqrt(board.length());
 
     //{row0, row1, row2, col1, col2, col3, Ldiag, Rdiag}
     int[] rowsColumnsDiagonals = new int[2*rowLength + 2];
-
-    int rowNum = 0;
     int xCount = 0;
     int oCount = 0;
-    for (int i = 0; i < board.length(); i++) {
+
+    int rowNum = 0;
+    for (int i = 0; i < numSquares; i++) {
       char player = board.charAt(i);
       //to change what row number the loop is on
       //make sure this is updated at correct time
@@ -65,10 +67,6 @@ public class TicTacToeBoard {
       } else if (player == 'o') {
         score = -1;
         oCount++;
-        //Added this condition for random characters
-        //I'm not sure this is correct because then an o win might be artificially counted
-        //maybe I can prevent this through the oCount and xCount
-
       }
       //set row score
       rowsColumnsDiagonals[rowNum] += score;
@@ -102,7 +100,7 @@ public class TicTacToeBoard {
       }
     }
 
-    if(checkUnreachableState(xWin, oWin, xCount, oCount)) {
+    if(isUnreachableState(xWin, oWin, xCount, oCount)) {
       boardState = Evaluation.UnreachableState;
     } else if (!xWin && !oWin) {
       boardState = Evaluation.NoWinner;
