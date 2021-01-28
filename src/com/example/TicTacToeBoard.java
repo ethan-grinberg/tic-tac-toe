@@ -91,10 +91,10 @@ public class TicTacToeBoard {
 
     System.out.println("R" + Arrays.toString(rowsColumnsDiagonals));
     for (int i = 0; i < rowsColumnsDiagonals.length; i++) {
-      if (rowsColumnsDiagonals[i] == 3) {
+      if (rowsColumnsDiagonals[i] == rowLength) {
         xWin = true;
         boardState = Evaluation.Xwins;
-      } else if (rowsColumnsDiagonals[i] == -3) {
+      } else if (rowsColumnsDiagonals[i] == -rowLength) {
         oWin = true;
         boardState = Evaluation.Owins;
       }
