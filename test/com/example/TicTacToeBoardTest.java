@@ -4,6 +4,11 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class TicTacToeBoardTest {
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInValidBoard() {
+    TicTacToeBoard board = new TicTacToeBoard(".9");
+  }
   @Test
   public void testValidBoardNoWinner() {
     TicTacToeBoard board = new TicTacToeBoard("O...X.X..");
