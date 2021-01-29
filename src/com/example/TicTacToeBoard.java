@@ -49,16 +49,16 @@ public class TicTacToeBoard {
     int oCount = 0;
 
     int rowNum = 0;
-    for (int i = 0; i < numSquares; i++) {
-      char player = board.charAt(i);
+    for (int boardIndex = 0; boardIndex < numSquares; boardIndex++) {
+      char player = board.charAt(boardIndex);
       //to change what row number the loop is on
       //make sure this is updated at correct time
-      if (i % rowLength == 0 && i != 0) {
+      if (boardIndex % rowLength == 0 && boardIndex != 0) {
         rowNum++;
       }
       System.out.println(rowNum);
       //the column number of the current character
-      int columnNum = (i % rowLength);
+      int columnNum = (boardIndex % rowLength);
 
       int score = 0;
       if (player == 'x') {
@@ -82,7 +82,7 @@ public class TicTacToeBoard {
         //adds score to left diagonal
         rowsColumnsDiagonals[2 * rowLength] += score;
         //i != 0 might be redundant because of first conditional
-      } else if (i != 0 && (i % (rowLength - 1) == 0)) {
+      } else if (boardIndex != 0 && (boardIndex % (rowLength - 1) == 0)) {
         //checks if character is on right diagonal and adds score there
         //I believe that the i != rowNum makes sure middle and 0,0 isn't counted
         rowsColumnsDiagonals[2 * rowLength + 1] += score;
