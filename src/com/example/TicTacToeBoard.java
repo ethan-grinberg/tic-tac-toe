@@ -81,10 +81,11 @@ public class TicTacToeBoard {
       if (columnNum == rowNum) {
         //adds score to left diagonal
         rowsColumnsDiagonals[2 * rowLength] += score;
-      } else if (columnNum != 0 && (i % (rowLength - 1) == 0)) {
+        //i != 0 might be redundant because of first conditional
+      } else if (i != 0 && (i % (rowLength - 1) == 0)) {
         //checks if character is on right diagonal and adds score there
         //I believe that the i != rowNum makes sure middle and 0,0 isn't counted
-        rowsColumnsDiagonals[2 * rowLength] += score;
+        rowsColumnsDiagonals[2 * rowLength + 1] += score;
       }
       System.out.println("R" + Arrays.toString(rowsColumnsDiagonals));
     }
