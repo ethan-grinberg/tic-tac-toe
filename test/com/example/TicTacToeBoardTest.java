@@ -36,5 +36,9 @@ public class TicTacToeBoardTest {
     TicTacToeBoard board = new TicTacToeBoard("X--XX-XOO");
     assertEquals(Evaluation.UnreachableState, board.evaluate());
   }
-  //How do we test an invalid board entry? assertThrows?
+  @Test
+  public void testValidBoardFourByFourWinnerX() {
+    TicTacToeBoard board = new TicTacToeBoard("OOOXXXxOOXOXX...");
+    assertEquals(Evaluation.Xwins, board.evaluate());
+  }
 }
