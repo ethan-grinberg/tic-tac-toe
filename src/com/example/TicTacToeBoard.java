@@ -14,6 +14,9 @@ public class TicTacToeBoard {
    * @param setBoard The string representing the board
    */
   public TicTacToeBoard(String setBoard) {
+    if (setBoard == null || setBoard.length() == 0) {
+      throw new IllegalArgumentException();
+    }
     int setNumSquares = setBoard.length();
     //cite source
     int setRowLength = (int) Math.sqrt(setNumSquares);
