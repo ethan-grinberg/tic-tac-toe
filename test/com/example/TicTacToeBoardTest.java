@@ -5,20 +5,25 @@ import static org.junit.Assert.assertEquals;
 
 public class TicTacToeBoardTest {
 
-  //invalid, unreachable boards, and no winnner
+  //invalid board and no winner
   @Test(expected = IllegalArgumentException.class)
-  public void testInValidBoard() {
+  public void testInvalidBoard() {
     TicTacToeBoard board = new TicTacToeBoard(".9");
   }
-
   @Test
   public void testValidBoardNoWinner() {
     TicTacToeBoard board = new TicTacToeBoard("O...X.X..");
     assertEquals(Evaluation.NoWinner, board.evaluate());
   }
+  //unreachable states on valid boards
   @Test
-  public void testValidBoardUnreachableState() {
-    TicTacToeBoard board = new TicTacToeBoard("X--XX-XOO");
+  public void testValidBoardTwoWinners() {
+    TicTacToeBoard board = new TicTacToeBoard(".ox.oxxox");
+    assertEquals(Evaluation.UnreachableState, board.evaluate());
+  }
+  @Test
+  public void testUnreachableStateNoWinner() {
+    TicTacToeBoard board = new TicTacToeBoard("x.x..x.o ");
     assertEquals(Evaluation.UnreachableState, board.evaluate());
   }
   @Test
@@ -26,6 +31,7 @@ public class TicTacToeBoardTest {
     TicTacToeBoard board = new TicTacToeBoard("--X-XOXOO");
     assertEquals(Evaluation.UnreachableState, board.evaluate());
   }
+
   //3X3 board winners
   @Test
   public void testValidBoardWinnerXHorizontal() {
@@ -42,6 +48,7 @@ public class TicTacToeBoardTest {
     TicTacToeBoard board = new TicTacToeBoard("O-..OXXXO");
     assertEquals(Evaluation.Owins, board.evaluate());
   }
+
   //4x4 board tests
   @Test
   public void testFourByFourWinnerRDiagonal() {

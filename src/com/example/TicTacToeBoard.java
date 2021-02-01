@@ -29,10 +29,10 @@ public class TicTacToeBoard {
     }
   }
   private boolean isUnreachableState(boolean xWin, boolean oWin, int xCount, int oCount) {
-    if (xWin && oWin) {
+    if (!(xCount == oCount || (oCount + 1 == xCount))) {
       return true;
-    } else if (!(xCount == oCount || (oCount + 1 == xCount))) {
-      return true;
+      //checks for a move after a player has won
+      //This is also works as a check for two winners
     } else if ((xWin && (oCount == xCount)) || (oWin && (xCount != oCount))) {
       return true;
     }
