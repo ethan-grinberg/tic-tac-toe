@@ -7,8 +7,12 @@ public class TicTacToeBoardTest {
 
   //invalid board and no winner on valid board
   @Test(expected = IllegalArgumentException.class)
-  public void testInvalidBoard() {
+  public void testInvalidBoardNonSquare() {
     TicTacToeBoard board = new TicTacToeBoard(".9");
+  }
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidBoardNull() {
+    TicTacToeBoard board = new TicTacToeBoard(null);
   }
   @Test
   public void testValidBoardNoWinner() {
