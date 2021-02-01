@@ -9,27 +9,11 @@ public class TicTacToeBoardTest {
   public void testInValidBoard() {
     TicTacToeBoard board = new TicTacToeBoard(".9");
   }
+
   @Test
   public void testValidBoardNoWinner() {
     TicTacToeBoard board = new TicTacToeBoard("O...X.X..");
     assertEquals(Evaluation.NoWinner, board.evaluate());
-  }
-  //horizontal winner
-  @Test
-  public void testValidBoardWinnerX() {
-    TicTacToeBoard board = new TicTacToeBoard("OOXXXXOXO");
-    assertEquals(Evaluation.Xwins, board.evaluate());
-  }
-  //vertical winner
-  @Test
-  public void testValidBoardWinnerO() {
-    TicTacToeBoard board = new TicTacToeBoard("OX-OXXOOX");
-    assertEquals(Evaluation.Owins, board.evaluate());
-  }
-  @Test
-  public void testValidBoardDiagonalWinner() {
-    TicTacToeBoard board = new TicTacToeBoard("O-.XOXXXO");
-    assertEquals(Evaluation.Owins, board.evaluate());
   }
   @Test
   public void testValidBoardUnreachableState() {
@@ -37,7 +21,30 @@ public class TicTacToeBoardTest {
     assertEquals(Evaluation.UnreachableState, board.evaluate());
   }
   @Test
-  public void testValidBoardFourByFourWinnerX() {
+  public void testMoveAfterWinnerUnreachable() {
+    TicTacToeBoard board = new TicTacToeBoard("--X-XOXOO");
+    assertEquals(Evaluation.UnreachableState, board.evaluate());
+  }
+
+  //3X3 board winners
+  @Test
+  public void testValidBoardWinnerXHorizontal() {
+    TicTacToeBoard board = new TicTacToeBoard("OOXxXXOXo");
+    assertEquals(Evaluation.Xwins, board.evaluate());
+  }
+  @Test
+  public void testValidBoardWinnerOVertical() {
+    TicTacToeBoard board = new TicTacToeBoard("OX-OXXOO ");
+    assertEquals(Evaluation.Owins, board.evaluate());
+  }
+  @Test
+  public void testValidBoardLDiagonalWinner() {
+    TicTacToeBoard board = new TicTacToeBoard("O-.XOXXXO");
+    assertEquals(Evaluation.Owins, board.evaluate());
+  }
+  //4x4 board winner
+  @Test
+  public void testFourByFourWinnerRDiagonal() {
     TicTacToeBoard board = new TicTacToeBoard("OOOXXXxOOXOXX...");
     assertEquals(Evaluation.Xwins, board.evaluate());
   }
