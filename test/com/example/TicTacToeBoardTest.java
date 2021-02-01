@@ -25,7 +25,6 @@ public class TicTacToeBoardTest {
     TicTacToeBoard board = new TicTacToeBoard("--X-XOXOO");
     assertEquals(Evaluation.UnreachableState, board.evaluate());
   }
-
   //3X3 board winners
   @Test
   public void testValidBoardWinnerXHorizontal() {
@@ -39,13 +38,13 @@ public class TicTacToeBoardTest {
   }
   @Test
   public void testValidBoardLDiagonalWinner() {
-    TicTacToeBoard board = new TicTacToeBoard("O-.XOXXXO");
+    TicTacToeBoard board = new TicTacToeBoard("O-..OXXXO");
     assertEquals(Evaluation.Owins, board.evaluate());
   }
   //4x4 board winner
   @Test
   public void testFourByFourWinnerRDiagonal() {
-    TicTacToeBoard board = new TicTacToeBoard("OOOXXXxOOXOXX...");
+    TicTacToeBoard board = new TicTacToeBoard("OOOXXXxOOXOXX ..");
     assertEquals(Evaluation.Xwins, board.evaluate());
   }
 }

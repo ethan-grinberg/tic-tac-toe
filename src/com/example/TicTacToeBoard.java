@@ -86,7 +86,7 @@ public class TicTacToeBoard {
       if (columnNum == rowNum) {
         //adds score to left diagonal
         rowsColumnsDiagonals[2 * rowLength] += score;
-        if (((rowLength - 1) / 2) == rowNum) {
+        if (((rowLength - 1) / 2.0) == rowNum) {
           rowsColumnsDiagonals[2 * rowLength + 1] += score;
         }
         //i != 0 might be redundant because of first conditional
