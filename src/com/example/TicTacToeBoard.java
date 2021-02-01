@@ -20,9 +20,9 @@ public class TicTacToeBoard {
     if (setBoard == null || setBoard.length() == 0) {
       throw new IllegalArgumentException();
     }
-    //cite source
+
     int setRowLength = (int) Math.sqrt(setBoard.length());
-    if (setRowLength * setRowLength != setBoard.length()) {
+    if (setRowLength * setRowLength != setBoard.length() || setRowLength < 3) {
       throw new IllegalArgumentException();
     } else {
       board = setBoard.toLowerCase();
@@ -31,7 +31,7 @@ public class TicTacToeBoard {
   }
 
   /**
-   * Checks the state of any nxn board (unreachable, no winner, X wins, or O wins)
+   * Checks the state of any nxn board where n > 3 (unreachable, no winner, X wins, or O wins)
    * @return an enum value corresponding to the board evaluation
    */
   public Evaluation evaluate() {
