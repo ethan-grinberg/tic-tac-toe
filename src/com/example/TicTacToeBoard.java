@@ -33,6 +33,8 @@ public class TicTacToeBoard {
       return true;
     } else if (!(xCount == oCount || (oCount + 1 == xCount))) {
       return true;
+    } else if ((xWin && (oCount == xCount)) || (oWin && (xCount != oCount))) {
+      return true;
     }
     return false;
   }
