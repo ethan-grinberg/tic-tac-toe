@@ -33,7 +33,7 @@ public class TicTacToeBoardTest {
   }
   @Test
   public void testValidBoardWinnerOVertical() {
-    TicTacToeBoard board = new TicTacToeBoard("OX-OXXOO ");
+    TicTacToeBoard board = new TicTacToeBoard("OX-OXXO  ");
     assertEquals(Evaluation.Owins, board.evaluate());
   }
   @Test
@@ -44,7 +44,7 @@ public class TicTacToeBoardTest {
   //4x4 board winner
   @Test
   public void testFourByFourWinnerRDiagonal() {
-    TicTacToeBoard board = new TicTacToeBoard("OOOXXXxOOXOXX ..");
+    TicTacToeBoard board = new TicTacToeBoard("OOOXXXxOoXOXX ..");
     assertEquals(Evaluation.Xwins, board.evaluate());
   }
 }
