@@ -1,13 +1,16 @@
 package com.example;
-import java.util.Arrays;
 
 /**
  * Takes in and evaluates a string representing a tic tac toe board.
  */
 public class TicTacToeBoard {
-  //variable that stores the board string
-  private String board;
-  private int rowLength;
+  private final String board;
+  private final int rowLength;
+
+  private boolean xWin;
+  private boolean oWin;
+  private int xCount;
+  private int oCount;
   /**
    * This method should load a string into your TicTacToeBoard class.
    * @param setBoard The string representing the board
@@ -25,7 +28,33 @@ public class TicTacToeBoard {
       rowLength = setRowLength;
     }
   }
-  private boolean isUnreachableState(boolean xWin, boolean oWin, int xCount, int oCount) {
+  /**
+   * Checks the state of the board (unreachable, no winner, X wins, or O wins)
+   * @return an enum value corresponding to the board evaluation
+   */
+  public Evaluation evaluate() {
+    Evaluation boardState = null;
+
+    int[] scores = tallyScore();
+    for (int score : scores) {
+      if (score == rowLength) {
+        xWin = true;
+        boardState = Evaluation.Xwins;
+      } else if (score == -rowLength) {
+        oWin = true;
+        boardState = Evaluation.Owins;
+      }
+    }
+
+    if (isUnreachableState()) {
+      boardState = Evaluation.UnreachableState;
+    } else if (!xWin && !oWin) {
+      boardState = Evaluation.NoWinner;
+    }
+
+    return boardState;
+  }
+  private boolean isUnreachableState() {
     if (!(xCount == oCount || (oCount + 1 == xCount))) {
       return true;
       //checks for a move after a player has won
@@ -36,30 +65,17 @@ public class TicTacToeBoard {
     return false;
   }
 
-  /**
-   * Checks the state of the board (unreachable, no winner, X wins, or O wins)
-   * @return an enum value corresponding to the board evaluation
-   */
-  public Evaluation evaluate() {
-    boolean xWin = false;
-    boolean oWin = false;
-    Evaluation boardState = null;
-
+  private int[] tallyScore() {
     //{row0, row1, row2, col1, col2, col3, Ldiag, Rdiag}
     int[] rowsColumnsDiagonals = new int[2*rowLength + 2];
-    int xCount = 0;
-    int oCount = 0;
 
     int rowNum = 0;
     for (int boardIndex = 0; boardIndex < board.length(); boardIndex++) {
       char player = board.charAt(boardIndex);
-      //to change what row number the loop is on
-      //make sure this is updated at correct time
+
       if (boardIndex % rowLength == 0 && boardIndex != 0) {
         rowNum++;
       }
-      System.out.println(rowNum);
-      //the column number of the current character
       int columnNum = (boardIndex % rowLength);
 
       int score = 0;
@@ -70,47 +86,20 @@ public class TicTacToeBoard {
         score = -1;
         oCount++;
       }
-      //set row score
+      //add row score
       rowsColumnsDiagonals[rowNum] += score;
-
-      //set column score
+      //add column score
       rowsColumnsDiagonals[columnNum + rowLength] += score;
-
-      //TODO
-      //I think the diagonal is creating a bug
-      //set diagonal score
-      //I need to count the middle for both diagonals
+      //add diagonal score
       if (columnNum == rowNum) {
-        //adds score to left diagonal
         rowsColumnsDiagonals[2 * rowLength] += score;
         if (((rowLength - 1) / 2.0) == rowNum) {
           rowsColumnsDiagonals[2 * rowLength + 1] += score;
         }
-        //i != 0 might be redundant because of first conditional
-      } else if (boardIndex != 0 && (boardIndex % (rowLength - 1) == 0)) {
-        //checks if character is on right diagonal and adds score there
-        //I believe that the i != rowNum makes sure middle and 0,0 isn't counted
+      } else if ((boardIndex % (rowLength - 1) == 0)) {
         rowsColumnsDiagonals[2 * rowLength + 1] += score;
       }
     }
-
-    System.out.println("R" + Arrays.toString(rowsColumnsDiagonals));
-    for (int i = 0; i < rowsColumnsDiagonals.length; i++) {
-      if (rowsColumnsDiagonals[i] == rowLength) {
-        xWin = true;
-        boardState = Evaluation.Xwins;
-      } else if (rowsColumnsDiagonals[i] == -rowLength) {
-        oWin = true;
-        boardState = Evaluation.Owins;
-      }
-    }
-
-    if(isUnreachableState(xWin, oWin, xCount, oCount)) {
-      boardState = Evaluation.UnreachableState;
-    } else if (!xWin && !oWin) {
-      boardState = Evaluation.NoWinner;
-    }
-
-    return boardState;
+    return rowsColumnsDiagonals;
   }
 }
