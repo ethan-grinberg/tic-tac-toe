@@ -91,10 +91,13 @@ public class TicTacToeBoard {
       //add player score to corresponding diagonal section score if appropriate
       if (columnNum == rowNum) {
         sectionScores[numSections - 2] += playerScore;
+
         //This checks if the character is in the middle square
         if (((rowLength - 1) / 2.0) == rowNum) {
           sectionScores[numSections - 1] += playerScore;
         }
+
+        //checks if player is in right diagonal
       } else if ((boardIndex % (rowLength - 1) == 0)) {
         sectionScores[numSections - 1] += playerScore;
       }
