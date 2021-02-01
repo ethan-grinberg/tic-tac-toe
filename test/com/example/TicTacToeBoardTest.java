@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TicTacToeBoardTest {
 
-  //invalid board and no winner on valid board
+  //invalid boards
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidBoardNonSquare() {
     TicTacToeBoard board = new TicTacToeBoard(".9");
@@ -14,6 +14,7 @@ public class TicTacToeBoardTest {
   public void testInvalidBoardNull() {
     TicTacToeBoard board = new TicTacToeBoard(null);
   }
+
   @Test
   public void testValidBoardNoWinner() {
     TicTacToeBoard board = new TicTacToeBoard("O...X.X..");

@@ -8,7 +8,6 @@ public class TicTacToeBoard {
   //variable that stores the board string
   private String board;
   private int rowLength;
-  private int numSquares;
   /**
    * This method should load a string into your TicTacToeBoard class.
    * @param setBoard The string representing the board
@@ -17,15 +16,13 @@ public class TicTacToeBoard {
     if (setBoard == null || setBoard.length() == 0) {
       throw new IllegalArgumentException();
     }
-    int setNumSquares = setBoard.length();
     //cite source
-    int setRowLength = (int) Math.sqrt(setNumSquares);
-    if (setRowLength * setRowLength != setNumSquares) {
+    int setRowLength = (int) Math.sqrt(setBoard.length());
+    if (setRowLength * setRowLength != setBoard.length()) {
       throw new IllegalArgumentException();
     } else {
       board = setBoard.toLowerCase();
       rowLength = setRowLength;
-      numSquares = setNumSquares;
     }
   }
   private boolean isUnreachableState(boolean xWin, boolean oWin, int xCount, int oCount) {
@@ -54,7 +51,7 @@ public class TicTacToeBoard {
     int oCount = 0;
 
     int rowNum = 0;
-    for (int boardIndex = 0; boardIndex < numSquares; boardIndex++) {
+    for (int boardIndex = 0; boardIndex < board.length(); boardIndex++) {
       char player = board.charAt(boardIndex);
       //to change what row number the loop is on
       //make sure this is updated at correct time
