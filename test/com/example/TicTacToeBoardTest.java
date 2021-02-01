@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TicTacToeBoardTest {
 
+  //invalid, unreachable boards, and no winnner
   @Test(expected = IllegalArgumentException.class)
   public void testInValidBoard() {
     TicTacToeBoard board = new TicTacToeBoard(".9");
@@ -41,10 +42,25 @@ public class TicTacToeBoardTest {
     TicTacToeBoard board = new TicTacToeBoard("O-..OXXXO");
     assertEquals(Evaluation.Owins, board.evaluate());
   }
-  //4x4 board winner
+  //4x4 board tests
   @Test
   public void testFourByFourWinnerRDiagonal() {
     TicTacToeBoard board = new TicTacToeBoard("OOOXXXxOoXOXX ..");
     assertEquals(Evaluation.Xwins, board.evaluate());
+  }
+  @Test
+  public void testFourByFourWinnerLDiagonal() {
+    TicTacToeBoard board = new TicTacToeBoard("o...xoxx..ox...o");
+    assertEquals(Evaluation.Owins, board.evaluate());
+  }
+  @Test
+  public void testFourByFourWinnerHorizontal() {
+    TicTacToeBoard board = new TicTacToeBoard("....ooooxxx...x.");
+    assertEquals(Evaluation.Owins, board.evaluate());
+  }
+  @Test
+  public void testFourByFourUnreachableState() {
+    TicTacToeBoard board = new TicTacToeBoard("o...ooooxxx...x.");
+    assertEquals(Evaluation.UnreachableState, board.evaluate());
   }
 }
