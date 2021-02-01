@@ -67,7 +67,6 @@ public class TicTacToeBoard {
 
     int rowNum = 0;
     for (int boardIndex = 0; boardIndex < board.length(); boardIndex++) {
-
       int columnNum = (boardIndex % rowLength);
       if (columnNum == 0 && boardIndex != 0) {
         rowNum++;
