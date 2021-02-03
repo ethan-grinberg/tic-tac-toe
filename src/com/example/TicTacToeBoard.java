@@ -5,7 +5,7 @@ package com.example;
  */
 public class TicTacToeBoard {
   private final String board;
-  private final int rowLength;
+  private final int sideLength;
 
   private boolean xWin;
   private boolean oWin;
@@ -21,12 +21,12 @@ public class TicTacToeBoard {
       throw new IllegalArgumentException();
     }
 
-    int setRowLength = (int) Math.sqrt(setBoard.length());
-    if (setRowLength * setRowLength != setBoard.length() || setRowLength < 3) {
+    int setSideLength = (int) Math.sqrt(setBoard.length());
+    if (setSideLength * setSideLength != setBoard.length() || setSideLength < 3) {
       throw new IllegalArgumentException();
     } else {
       board = setBoard.toLowerCase();
-      rowLength = setRowLength;
+      sideLength = setSideLength;
     }
   }
 
@@ -39,10 +39,10 @@ public class TicTacToeBoard {
 
     int[] sectionScores = sumSectionScores();
     for (int score : sectionScores) {
-      if (score == rowLength) {
+      if (score == sideLength) {
         xWin = true;
         boardState = Evaluation.Xwins;
-      } else if (score == -rowLength) {
+      } else if (score == -sideLength) {
         oWin = true;
         boardState = Evaluation.Owins;
       }
@@ -60,14 +60,14 @@ public class TicTacToeBoard {
   //returns an array with the sum of the scores in each section of the board
   // one X being a score of 1, and one O being a score of -1
   private int[] sumSectionScores() {
-    int numSections = 2 * rowLength + 2;
+    int numSections = 2 * sideLength + 2;
     //Stored in the format:
     // {row0, row1, row2, col0, col2, col3, Ldiag, Rdiag}
     int[] sectionScores = new int[numSections];
 
     int rowNum = 0;
     for (int boardIndex = 0; boardIndex < board.length(); boardIndex++) {
-      int columnNum = (boardIndex % rowLength);
+      int columnNum = (boardIndex % sideLength);
       if (columnNum == 0 && boardIndex != 0) {
         rowNum++;
       }
@@ -85,19 +85,19 @@ public class TicTacToeBoard {
       sectionScores[rowNum] += playerScore;
 
       //add player score to corresponding column section score
-      sectionScores[columnNum + rowLength] += playerScore;
+      sectionScores[columnNum + sideLength] += playerScore;
 
       //add player score to corresponding diagonal section score if appropriate
       if (columnNum == rowNum) {
         sectionScores[numSections - 2] += playerScore;
 
         //This checks if the character is in the middle square
-        if (((rowLength - 1) / 2.0) == rowNum) {
+        if (((sideLength - 1) / 2.0) == rowNum) {
           sectionScores[numSections - 1] += playerScore;
         }
 
         //checks if player is in right diagonal
-      } else if ((boardIndex % (rowLength - 1) == 0)) {
+      } else if ((boardIndex % (sideLength - 1) == 0)) {
         sectionScores[numSections - 1] += playerScore;
       }
     }
