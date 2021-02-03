@@ -95,8 +95,7 @@ public class TicTacToeBoard {
         if (((sideLength - 1) / 2.0) == rowNum) {
           sectionScores[numSections - 1] += playerScore;
         }
-
-        //checks if player is in right diagonal
+        //checks if player is in the right side diagonal
       } else if ((boardIndex % (sideLength - 1) == 0)) {
         sectionScores[numSections - 1] += playerScore;
       }
